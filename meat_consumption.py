@@ -36,5 +36,25 @@ print(total_kg_country)
 
 #exploring a little more the 3 highest countries
 print("""\n The country that most consumption is United States, following by Autralia and Israel.
-Let's explore a little about these countries.""")
-dfUSA = dfKgCap.loc[(df['Country'] == 'USA')
+Below we will explore a little more about USA.""")
+
+#Analising the USA's numbers
+dfUSA = dfKgCap.loc[(df['Country'] == 'USA')]
+dfUSA = dfUSA.drop(['Country', 'Measure'], axis=1, inplace=False)
+
+USA_per_year = dfUSA.groupby(by = ['Year'])['Total'].sum().round(3).reset_index()
+USA_mean = USA_per_year['Total'].mean().round(3)
+print("\n The meaning USA's consumption per year is around {}. Let's check the number per year in details:\n".format(USA_mean))
+print(USA_per_year)
+
+USA_type_meat = dfUSA.pivot(index='Year', columns='Type_meat', values='Total').round(3)
+print("\n The cunsumption in USA per type of meat per year is:\n")
+print(USA_type_meat)
+print("\n The meaning per type of meat in 17 years are around:\n")
+USA_type_meat_mean = USA_type_meat.mean().round(3)
+print(USA_type_meat_mean)
+print("\n And the maximum values consumed per type of meat in 17 years are:")
+USA_type_meat_max = USA_type_meat.max()
+print(USA_type_meat_max)
+
+print("\n Here we could see a bit about the meat consumption around the world since 2000 until 2017, and a bit more about the biggest consumer country.")
